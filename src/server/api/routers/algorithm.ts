@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from '~/server/api/trpc';
 
-export const postRouter = createTRPCRouter({
+export const algorithmRouter = createTRPCRouter({
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
     .query(({ input }) => {
@@ -17,17 +17,18 @@ export const postRouter = createTRPCRouter({
       // simulate a slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      return ctx.db.post.create({
+      return ctx.db.algorithm.create({
         data: {
           name: input.name,
-          email: "",
+          symbol: 'USDT',
+          mtId: 1,
         },
       });
     }),
 
   getLatest: publicProcedure.query(({ ctx }) => {
-    return ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
+    return ctx.db.algorithm.findFirst({
+      orderBy: { createdAt: 'desc' },
     });
   }),
 });

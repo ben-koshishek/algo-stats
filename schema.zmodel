@@ -10,12 +10,25 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    email     String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Algorithm {
+    id         Int         @id @default(autoincrement())
+    mtId       Int         @unique
+    name       String
+    symbol     String
 
-    @@index([name])
+    shotConfig ShotConfig?
+
+    createdAt  DateTime    @default(now())
+    updatedAt  DateTime    @updatedAt
+}
+
+model ShotConfig {
+    id          Int       @id @default(autoincrement())
+    name        String
+    value       String
+    algorithm   Algorithm @relation(fields: [algorithmId], references: [id])
+    algorithmId Int       @unique
+
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
 }
