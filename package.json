@@ -7,9 +7,10 @@
     "start": "next start",
     "build": "next build",
     "dev": "next dev",
+    "prisma:generate": "npx zenstack prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "postinstall": "npx zenstack generate && npx prisma db push",
+    "postinstall": "yarn run prisma:generate && yarn run db:push",
     "lint": "next lint",
     "vercel-build": "yarn run postinstall && yarn run build"
   },
